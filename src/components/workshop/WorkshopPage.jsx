@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowRight, CheckCircle2, Calendar, Clock, MapPin } from "lucide-react";
+import { ArrowRight, CheckCircle2, Calendar, Clock, MapPin, Mail, Phone, ShieldAlert } from "lucide-react";
 import WorkshopRegistrationForm from "./WorkshopRegistrationForm";
 import { getReferralLinkByCode } from "../../services/workshopService.js";
 
@@ -34,13 +34,66 @@ export default function WorkshopPage() {
   const [showForm, setShowForm] = useState(false);
   const [referralCode] = useState(getReferralFromUrl);
   const [workshopDetails, setWorkshopDetails] = useState(null);
+  const [referralStatus, setReferralStatus] = useState(referralCode ? "loading" : "available");
 
   useEffect(() => {
     if (!referralCode) return;
     getReferralLinkByCode(referralCode)
-      .then(setWorkshopDetails)
-      .catch(() => setWorkshopDetails(null));
+      .then((details) => {
+        setWorkshopDetails(details);
+        setReferralStatus("available");
+      })
+      .catch(() => {
+        setWorkshopDetails(null);
+        setReferralStatus("expired");
+      });
   }, [referralCode]);
+
+  if (referralStatus === "expired") {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#06151C] px-4 py-10 text-slate-100 sm:px-6">
+        <main className="w-full max-w-lg rounded-2xl border border-white/10 bg-white p-6 text-center shadow-2xl sm:p-10">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#FF5E14]/10 text-[#FF5E14]">
+            <ShieldAlert size={34} />
+          </div>
+          <p className="mt-6 text-xs font-bold uppercase tracking-[0.2em] text-[#008C95]">Grow Skills Tech</p>
+          <h1 className="mt-2 text-2xl font-bold text-[#06151C] sm:text-3xl">This link has expired</h1>
+          <p className="mx-auto mt-4 max-w-md text-sm leading-6 text-slate-600 sm:text-base">
+            This workshop registration link is no longer active or has been removed. Please contact Grow Skills Tech for a new registration link.
+          </p>
+
+          <div className="mt-7 space-y-3 rounded-xl border border-slate-200 bg-slate-50 p-4 text-left">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">Need help?</p>
+            <a href="mailto:growskillstech@gmail.com" className="flex items-center gap-3 text-sm font-medium text-[#008C95] hover:text-[#006f76]">
+              <Mail size={17} className="shrink-0" />
+              <span className="break-all">growskillstech@gmail.com</span>
+            </a>
+            <div className="flex items-start gap-3 text-sm font-medium text-[#008C95]">
+              <Phone size={17} className="shrink-0" />
+              <div className="flex flex-wrap gap-x-3 gap-y-1">
+                <a href="tel:+917898474876" className="hover:text-[#006f76]">+91 78984 74876</a>
+                <a href="tel:+917470834876" className="hover:text-[#006f76]">+91 74708 34876</a>
+                <a href="tel:+918889246291" className="hover:text-[#006f76]">+91 88892 46291</a>
+              </div>
+            </div>
+          </div>
+
+          <a href="https://www.growskillstech.com" className="mt-7 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[#06151C] px-5 text-sm font-bold text-white transition hover:bg-[#0a1f2e] sm:w-auto">
+            Visit Grow Skills Tech
+          </a>
+          <p className="mt-6 text-[11px] text-slate-400">Referral code: {referralCode}</p>
+        </main>
+      </div>
+    );
+  }
+
+  if (referralStatus === "loading") {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#06151C] px-4 text-sm text-slate-300">
+        Loading workshop details...
+      </div>
+    );
+  }
 
   const workshopName = workshopDetails?.workshopName || "Skills Enhance Workshop";
   const workshopStartDate = workshopDetails?.workshopStartDate || workshopDetails?.workshopDate || "2026-10-01";
