@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-50:  #eef5ff;
+  --color-brand-100: #dbe9ff;
+  --color-brand-200: #bcd3ff;
+  --color-brand-300: #91b3ff;
+  --color-brand-400: #5f8aff;
+  --color-brand-500: #3d6dff;
+  --color-brand-600: #2f56d6; /* primary */
+  --color-brand-700: #2a4ab0;
+  --color-brand-800: #243e8f;
+  --color-brand-900: #1d326f;
+}
+
+@layer base {
+  .container {
+    @apply mx-auto px-4 sm:px-6 lg:px-8;
+    max-width: 1280px;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Master Admin light mode: force muted gray text to black */
+.master-admin-container[data-theme='light'] :is(
+  .text-slate-200,
+  .text-slate-300,
+  .text-slate-400,
+  .text-slate-500,
+  .text-slate-600,
+  .text-slate-700,
+  .text-slate-800,
+  .text-gray-400,
+  .text-gray-500,
+  .text-gray-600,
+  .text-gray-700
+) {
+  color: #000;
+}
+
+.master-admin-container[data-theme='light'] :is(
+  .placeholder\:text-slate-400::placeholder,
+  .placeholder\:text-slate-500::placeholder,
+  .placeholder\:text-gray-400::placeholder
+) {
+  color: rgb(0 0 0 / 0.5);
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 font-medium transition;
+  }
+  .btn-primary {
+    @apply bg-brand-600 text-white hover:bg-brand-700;
+  }
+  .btn-ghost {
+    @apply border border-gray-300 text-gray-700 hover:bg-gray-100;
+  }
+
+  .card {
+    @apply rounded-xl border bg-white p-5 shadow-sm hover:shadow-md transition;
+  }
+
+  .badge {
+    @apply inline-block text-xs font-medium px-2 py-1 rounded-lg;
+  }
+
+  .section-title {
+    @apply text-2xl font-bold text-center;
+  }
+  .section-sub {
+    @apply text-gray-600 text-center mt-1;
+  }
+}

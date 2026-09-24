@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /master-admin
+
+Sitemap: https://growskillstech.com/sitemap.xml
