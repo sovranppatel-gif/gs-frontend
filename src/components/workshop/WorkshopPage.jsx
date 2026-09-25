@@ -104,8 +104,26 @@ export default function WorkshopPage() {
     return year && month && day ? `${day}-${month}-${year}` : value;
   };
   const workshopDate = `${formatWorkshopDate(workshopStartDate)} – ${formatWorkshopDate(workshopEndDate)}`;
+  const formatTimeValue = (value) => {
+    if (!value) return "";
+
+    const match = String(value).trim().match(/^(\d{1,2}):(\d{2})(?:\s*(AM|PM))?$/i);
+    if (!match) return String(value).trim();
+
+    let hours = Number(match[1]);
+    const minutes = match[2];
+    const meridiem = match[3]?.toUpperCase();
+
+    if (meridiem === "AM" && hours === 12) hours = 0;
+    if (meridiem === "PM" && hours !== 12) hours += 12;
+
+    const displayHour = hours % 12 === 0 ? 12 : hours % 12;
+    const displayMeridiem = meridiem || (hours >= 12 ? "PM" : "AM");
+
+    return `${displayHour}:${minutes} ${displayMeridiem}`;
+  };
   const workshopTime = workshopDetails?.startTime && workshopDetails?.endTime
-    ? `${workshopDetails.startTime} – ${workshopDetails.endTime}`
+    ? `${formatTimeValue(workshopDetails.startTime)} – ${formatTimeValue(workshopDetails.endTime)}`
     : "1:00 PM – 3:00 PM";
   const workshopPlace = workshopDetails?.workshopPlace || "";
 

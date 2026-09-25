@@ -35,9 +35,6 @@ const emptyForm = {
   collegeName: "",
   course: "",
   semesterYear: "",
-  whatsappNumber: "",
-  githubProfile: "",
-  linkedinProfile: "",
   codingExperience: "",
 };
 
@@ -366,63 +363,21 @@ export default function WorkshopRegistrationForm({ referralCode, referredCollege
             </div>
           </div>
 
-          {/* Optional fields */}
-          <details className="group">
-            <summary className="cursor-pointer text-xs font-semibold text-[#00A896] hover:text-[#008C95] select-none">
-              + Add optional details (WhatsApp, GitHub, LinkedIn)
-            </summary>
-            <div className="mt-3 space-y-3">
-              <div>
-                <label className={labelBase}>WhatsApp Number</label>
-                <input
-                  type="tel"
-                  inputMode="numeric"
-                  maxLength={10}
-                  className={inputBase}
-                  placeholder="If different from mobile number"
-                  value={form.whatsappNumber}
-                  onChange={(e) => setField("whatsappNumber", e.target.value.replace(/\D/g, "").slice(0, 10))}
-                />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className={labelBase}>GitHub Profile</label>
-                  <input
-                    type="text"
-                    className={inputBase}
-                    placeholder="github.com/username"
-                    value={form.githubProfile}
-                    onChange={(e) => setField("githubProfile", e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label className={labelBase}>LinkedIn Profile</label>
-                  <input
-                    type="text"
-                    className={inputBase}
-                    placeholder="linkedin.com/in/username"
-                    value={form.linkedinProfile}
-                    onChange={(e) => setField("linkedinProfile", e.target.value)}
-                  />
-                </div>
-              </div>
-              <div>
-                <label className={labelBase}>Coding Experience</label>
-                <select
-                  className={inputBase}
-                  value={form.codingExperience}
-                  onChange={(e) => setField("codingExperience", e.target.value)}
-                >
-                  <option value="">Select level (optional)</option>
-                  {CODING_EXPERIENCE.map((lvl) => (
-                    <option key={lvl} value={lvl}>
-                      {lvl}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </details>
+          <div>
+            <label className={labelBase}>Coding Experience</label>
+            <select
+              className={inputBase}
+              value={form.codingExperience}
+              onChange={(e) => setField("codingExperience", e.target.value)}
+            >
+              <option value="">Select level (optional)</option>
+              {CODING_EXPERIENCE.map((lvl) => (
+                <option key={lvl} value={lvl}>
+                  {lvl}
+                </option>
+              ))}
+            </select>
+          </div>
 
           {error && (
             <div className="rounded-lg bg-red-50 border border-red-200 px-3 py-2.5 text-sm text-red-700">
