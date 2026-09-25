@@ -6,7 +6,7 @@ import {
 } from "../../services/workshopService";
 import WorkshopSuccess from "./WorkshopSuccess";
 
-const COURSES = ["BCA", "MCA", "B.Tech", "M.Tech", "B.Sc", "M.Sc", "B.Com", "MBA", "Other"];
+const COURSES = ["BCA", "MCA", "B.Tech", "M.Tech", "B.Sc", "M.Sc", "B.Com", "MBA", "BA", "MA", "MCOM", "Other"];
 
 const SEMESTER_YEARS = [
   "1st Semester",
@@ -21,6 +21,7 @@ const SEMESTER_YEARS = [
   "2nd Year",
   "3rd Year",
   "Final Year",
+  "PASSOUT",
 ];
 
 const CODING_EXPERIENCE = ["Beginner", "Intermediate", "Advanced", "Professional"];
